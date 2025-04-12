@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: skin-disease-detection-api
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: PORT
+        value: 10000
+    healthCheckPath: /health
+    autoDeploy: true
+
+  - type: static
+    name: skin-disease-detection-frontend
+    buildCommand: cd frontend && npm install && npm run build
+    publish: frontend/build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://skin-disease-detection-api.onrender.com 
