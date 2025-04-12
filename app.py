@@ -18,9 +18,18 @@ if not os.path.exists("./uploadimage"):
     os.makedirs("./uploadimage")
 
 # Load the trained model
-model_path = os.path.join(os.path.dirname(__file__), "sd_model.keras")
-# Define the classes (adjust according to your model's output)
-# Should match your notebook's classes
+try:
+    # Try to load the model from the current directory first
+    model_path = os.path.join(os.path.dirname(__file__), "sd_model.keras")
+    if os.path.exists(model_path):
+        model = load_model(model_path)
+    else:
+        raise FileNotFoundError("Model file not found in any of the expected locations")
+    print(f"Model loaded successfully from: {model_path}")
+except Exception as e:
+    print(f"Error loading model: {str(e)}")
+    model = None
+
 #class_names = ['akiec', 'bcc', 'bkl', 'df', 'mel', 'nv', 'vasc']
 class_names=['actinic keratosis', 'basal cell carcinoma','pigmented benign keratosis', 'dermatofibroma', 'melanoma', 'melanocytic nevi', 'vascular lesion']
 
