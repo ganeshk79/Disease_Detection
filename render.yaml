@@ -16,7 +16,7 @@ services:
     name: skin-disease-detection-frontend
     env: node
     buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/build
+    startCommand: serve -s frontend/build
     envVars:
       - key: REACT_APP_API_URL
         value: https://skin-disease-detection-api.onrender.com 
